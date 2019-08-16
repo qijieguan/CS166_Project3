@@ -306,36 +306,97 @@ public class MechanicShop{
 	
 	public static void AddCustomer(MechanicShop esql)
         {//1
-	    try{
-		String query = "SELECT * FROM Catalog WHERE cost < ";
+		try{
+			/*
+			String query = "SELECT * FROM Catalog WHERE cost < ";
 
-		System.out.print("\tEnter cost: $");
-		String input = in.readLine();
-		query += input;
+			System.out.print("\tEnter cost: $");
+			String input = in.readLine();
+			query += input;
 
-		int rowCount = esql.executeQuery (query);
-		System.out.println ("total row(s): " + rowCount);
-        
-	    }catch(Exception e)
-	    {
-		System.err.println (e.getMessage ());
-	    }		
+			int rowCount = esql.executeQuery (query);
+			System.out.println ("total row(s): " + rowCount);
+			*/
+			System.out.println("Enter customer's id");
+			String id = in.readLine();
+			System.out.println("Enter customer's first name");
+			String fname = in.readLine();
+			System.out.println("Enter customer's last name");
+			String lname = in.readLine();
+			System.out.println("Enter customer's phone");
+			String phone = in.readLine();
+			System.out.println("Enter customer's address");
+			String address = in.readLine();
+
+			//query = String.format("INSERT INTO Customer() VALUES(), id, fname, lname, phone, address);
+		}catch(Exception e)
+	    	{
+			System.err.println (e.getMessage ());
+	    	}    	
+
 	}
 	
 	public static void AddMechanic(MechanicShop esql){//2
-		
+		try {
+			System.out.println("Enter mechanic's id");
+			String id = in.readLine();
+			System.out.println("Enter mechanic's first name");
+			String fname = in.readLine();
+			System.out.println("Enter mechanic's last name");
+			String lname = in.readLine();
+			System.out.println("Enter mechanic's experience");
+			String experience = in.readLine();
+			
+			//query = String.format("INSERT INTO Mechanic() VALUES(), id, fname, lname, experience);
+			
+		}catch(Exception e) {
+			System.err.println (e.getMessage ());
+		}
 	}
 	
 	public static void AddCar(MechanicShop esql){//3
-		
+		try {
+			System.out.println("Enter Car's vin");
+			String vin = in.readLine();
+			System.out.println("Enter mechanic's make");
+			String make = in.readLine();
+			System.out.println("Enter mechanic's model");
+			String model = in.readLine();
+			System.out.println("Enter customer's year");
+			String year = in.readLine();
+		}catch(Exception e) {
+			System.err.println (e.getMessage ());
+		}
 	}
 	
 	public static void InsertServiceRequest(MechanicShop esql){//4
-		
+		try {
+			System.out.println("Enter service request's rid");
+			String rin = in.readLine();
+			System.out.println("Enter service request's date");
+			String date = in.readLine();
+			System.out.println("Enter service request's odometer");
+			String odometer = in.readLine();
+			System.out.println("Enter service request's complain");
+			String complain = in.readLine();
+		}catch(Exception e) {
+			System.err.println (e.getMessage ());
+		}
 	}
 	
 	public static void CloseServiceRequest(MechanicShop esql) throws Exception{//5
-		
+		try {
+			System.out.println("Enter service request's wid");
+			String win = in.readLine();
+			System.out.println("Enter service request's date");
+			String date = in.readLine();
+			System.out.println("Enter service request's comment");
+			String comment = in.readLine();
+			System.out.println("Enter service request's bill");
+			String bill = in.readLine();
+		}catch(Exception e) {
+			System.err.println (e.getMessage ());
+		}
 	}
 	
 	public static void ListCustomersWithBillLessThan100(MechanicShop esql){//6
