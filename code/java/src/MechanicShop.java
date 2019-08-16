@@ -345,7 +345,7 @@ public class MechanicShop{
 			System.out.println("Enter mechanic's last name");
 			String lname = in.readLine();
 			System.out.println("Enter mechanic's experience");
-			String experience = in.readLine();
+			int experience = Integer.parseln(in.readLine());
 			
 			//query = String.format("INSERT INTO Mechanic() VALUES(), id, fname, lname, experience);
 			
