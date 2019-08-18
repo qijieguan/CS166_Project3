@@ -344,8 +344,9 @@ public class MechanicShop{
 	
 	public static void AddMechanic(MechanicShop esql){//2
 		try {
-			System.out.println("Enter mechanic's id");
-			String id = in.readLine();
+			String query = String.format("SELECT id FROM Mechanic");
+			List<List<String>> data = esql.executeQuery(query);
+			int id = data.size() + 1;
 			System.out.println("Enter mechanic's first name");
 			String fname = in.readLine();
 			System.out.println("Enter mechanic's last name");
@@ -353,8 +354,10 @@ public class MechanicShop{
 			System.out.println("Enter mechanic's experience");
 			int experience = Integer.parseln(in.readLine());
 			
-			//query = String.format("INSERT INTO Mechanic() VALUES(), id, fname, lname, experience);
-			
+			query = String.format("INSERT INTO Mechanic(id, fname, lname, experience) VALUES(%d, %s, %s, %s), id, fname, lname, experience);
+			int rowCount = esql.executeQuery (query);
+			System.out.println ("total row(s): " + rowCount);
+					      
 		}catch(Exception e) {
 			System.err.println (e.getMessage ());
 		}
