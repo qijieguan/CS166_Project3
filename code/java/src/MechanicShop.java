@@ -317,8 +317,9 @@ public class MechanicShop{
 			int rowCount = esql.executeQuery (query);
 			System.out.println ("total row(s): " + rowCount);
 			*/
-			System.out.println("Enter customer's id");
-			String id = in.readLine();
+			String query = String.format("SELECT id FROM Customer");
+			List<List<String>> data = esql.executeQuery(query);
+			int id = data.size() + 1;
 			System.out.println("Enter customer's first name");
 			String fname = in.readLine();
 			System.out.println("Enter customer's last name");
@@ -328,7 +329,12 @@ public class MechanicShop{
 			System.out.println("Enter customer's address");
 			String address = in.readLine();
 
-			//query = String.format("INSERT INTO Customer() VALUES(), id, fname, lname, phone, address);
+			query = String.format("INSERT INTO Customer(id, fname, lname, phone, address) VALUES(%d, %s, %s, %s, %s), id, fname, lname, phone, address);
+			esql.executeUpdate(query);
+			
+			int rowCount = esql.executeQuery (query);
+			System.out.println ("total row(s): " + rowCount);
+					      
 		}catch(Exception e)
 	    	{
 			System.err.println (e.getMessage ());
