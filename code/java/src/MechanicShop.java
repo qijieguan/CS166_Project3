@@ -317,6 +317,11 @@ public class MechanicShop{
 			int rowCount = esql.executeQuery (query);
 			System.out.println ("total row(s): " + rowCount);
 			*/
+			
+			String query = String.format("SELECT id FROM Customer");
+			List<List<String>> data = esql.executeQueryAndReturnResult(query);
+			int id = data.size() + 1;
+			
 			System.out.println("Enter customer's first name");
 			String fname = in.readLine();
 			System.out.println("Enter customer's last name");
@@ -325,8 +330,6 @@ public class MechanicShop{
 			String phone = in.readLine();
 			System.out.println("Enter customer's address");
 			String address = in.readLine();
-
-			int id = 500;
 			
 			String query = "INSERT INTO Customer(id, fname, lname, phone, address) VALUES(" + id + ", \'" + fname + "\', \'" + lname + "\', \'" + phone + "\', \'" + address + "\');";
 			esql.executeUpdate(query);
@@ -343,14 +346,16 @@ public class MechanicShop{
 	
 	public static void AddMechanic(MechanicShop esql){//2
 		try {
+			String query = String.format("SELECT id FROM Mechanic");
+			List<List<String>> data = esql.executeQueryAndReturnResult(query);
+			int id = data.size() + 1;
+			
 			System.out.println("Enter mechanic's first name");
 			String fname = in.readLine();
 			System.out.println("Enter mechanic's last name");
 			String lname = in.readLine();
 			System.out.println("Enter mechanic's experience");
 			int experience = Integer.parseInt(in.readLine());
-			
-			int id = 500;
 			
 			String query = "INSERT INTO Mechanic(id, fname, lname, experience) VALUES(" + id + ", \'" + fname + "\', \'" + lname + "\', " + experience + ");";
 			esql.executeUpdate(query);
