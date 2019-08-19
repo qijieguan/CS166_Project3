@@ -317,9 +317,6 @@ public class MechanicShop{
 			int rowCount = esql.executeQuery (query);
 			System.out.println ("total row(s): " + rowCount);
 			*/
-			String query = String.format("SELECT id FROM Customer");
-			int data = esql.executeQuery(query);
-			int id = data + 1;
 			System.out.println("Enter customer's first name");
 			String fname = in.readLine();
 			System.out.println("Enter customer's last name");
@@ -329,7 +326,10 @@ public class MechanicShop{
 			System.out.println("Enter customer's address");
 			String address = in.readLine();
 
-			query = String.format("INSERT INTO Customer(id, fname, lname, phone, address) VALUES(%d, %s, %s, %s, %s)", id, fname, lname, phone, address);
+			int id = GetNextValue(esql, "id", "Customer");
+			
+			String query = "INSERT INTO Customer(id, fname, lname, phone, address) 
+					VALUES(" + id + ", \'" + fname + "\', \'" + lname + "\', \'" + phone + "\', \'" + address + "\');";
 			esql.executeUpdate(query);
 			
 			int rowCount = esql.executeQuery (query);
