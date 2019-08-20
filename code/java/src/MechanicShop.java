@@ -457,7 +457,10 @@ public class MechanicShop{
 	}
 	
 	public static void ListCustomersWithMoreThan20Cars(MechanicShop esql){//7
-		
+		/*
+		String query = String.format("SELECT c.customer fname, c.customer lname, c.customer_id FROM Customer c Owns o WHERE COUNT(o.customer.id) > 20, c.id = o.customer_id);
+		esql.executeQueryAndPrintResult(query);
+		*/
 	}
 	
 	public static void ListCarsBefore1995With50000Milles(MechanicShop esql){//8
