@@ -376,12 +376,23 @@ public class MechanicShop{
 		try {
 			System.out.println("Enter Car's vin");
 			String vin = in.readLine();
+			
+			String query = String.format("SELECT o.vin FROM Owns o WHERE vin = %s", vin);
+			List<List<String>> data = esql.executeQueryAndReturnResult(query);
+			if (data.get(0).get(0) == vin) {
+				System.out.println("Vin found");
+			}
+			else {
+				System.out.println("Vin not found");
+			}
+			
 			System.out.println("Enter mechanic's make");
 			String make = in.readLine();
 			System.out.println("Enter mechanic's model");
 			String model = in.readLine();
 			System.out.println("Enter customer's year");
 			int year = Integer.parseInt(in.readLine());
+			
 			
 			query = "INSERT INTO Car(vin, make, model, year) VALUES(\'" + vin + "\', \'" + make + "\', \'" + model + "\', " + year + ");";
 			esql.executeUpdate(query);
