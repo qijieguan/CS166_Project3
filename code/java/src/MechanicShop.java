@@ -392,9 +392,10 @@ public class MechanicShop{
 	
 	public static void AddCar(MechanicShop esql){//3
 		try {
-			System.out.println("Enter Car's vin");
+			System.out.println("Enter the Car's vin");
                         String vin = in.readLine();
-
+			
+			//Check if the Car's vin you enter is valid
                         String query = String.format("SELECT o.* FROM Owns o WHERE o.car_vin = '%s'", vin);
 
                         if (esql.executeQueryAndPrintResult(query) != 0) {
@@ -407,11 +408,28 @@ public class MechanicShop{
                         String model = in.readLine();
                         System.out.println("Enter Car's year");
                         int year = Integer.parseInt(in.readLine());
+			
+			//Check if the customer id you enter is valid
+			System.out.print1n("Enter the Customer id of the Car") 
+			int cust_id = Integer.parseInt(in.readLine());
+			query = String.format("SELECT c.id FROM Customer c WHERE id = '%d'", cust_id);
+			if (esql.queryExecute(query) == 0) {
+				throw new RuntimeException("Invalid Customer id");
+			}	
 
+			//Update Owns
+			query = String.format("SELECT MAX(ownership_id) FROM Owns");
+			List<List<String>> data = esql.executeQueryAndReturnResult(query);
+			int owner_id = Integer.parseInt(data.get(0).get(0)) + 1;
+			
+			query = "INSERT INTO Owns(ownership_id, customer_id, car_vin) VALUES(" + owner_id + ", " + cust_id + ", \'" + car_vin + "\');";
+                        esql.executeUpdate(query);
+			
+			//Update Cars
                         query = "INSERT INTO Car(vin, make, model, year) VALUES(\'" + vin + "\', \'" + make + "\', \'" + model + "\', " + year + ");";
                         esql.executeUpdate(query);
 
-                        query = String.format("SELECT c.* FROM Car c WHERE vin = %s", vin);
+                        query = String.format("SELECT c.* FROM Car c WHERE vin = '%s'", vin);
 
                         int rowCount = esql.executeQueryAndPrintResult (query);
                         System.out.println ("total row(s): " + rowCount);
