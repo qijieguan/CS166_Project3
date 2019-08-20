@@ -318,7 +318,16 @@ public class MechanicShop{
 			System.out.println ("total row(s): " + rowCount);
 			*/
 			
-			String query = String.format("SELECT MAX(id) FROM Customer");
+			System.out.println("Enter Customer's id");
+                        String id = in.readLine();
+
+                        String query = String.format("SELECT c.* FROM Customer c WHERE c.id = '%s'", id);
+
+                        if (esql.executeQueryAndPrintResult(query) != 0) {
+                                throw new RuntimeException("Customer id already exists\n");
+                        }
+			
+			query = String.format("SELECT MAX(id) FROM Customer");
 			List<List<String>> data = esql.executeQueryAndReturnResult(query);
 			int id = Integer.parseInt(data.get(0).get(0)) + 1;
 			
@@ -348,7 +357,16 @@ public class MechanicShop{
 	
 	public static void AddMechanic(MechanicShop esql){//2
 		try {
-			String query = String.format("SELECT MAX(id) FROM Mechanic");
+			System.out.println("Enter Mechanic's id");
+                        String id = in.readLine();
+
+                        String query = String.format("SELECT m.* FROM Mechanic m WHERE m.id = '%d'", id);
+
+                        if (esql.executeQueryAndPrintResult(query) != 0) {
+                                throw new RuntimeException("Mechanic id already exists\n");
+                        }
+			
+			query = String.format("SELECT MAX(id) FROM Mechanic");
 			List<List<String>> data = esql.executeQueryAndReturnResult(query);
 			int id = Integer.parseInt(data.get(0).get(0)) + 1;
 			
@@ -383,17 +401,12 @@ public class MechanicShop{
                                 throw new RuntimeException("Car vin already exists\n");
                         }
 
-                        List<List<String>> data = esql.executeQueryAndReturnResult(query);
-
-                        System.out.println("Enter mechanic's make");
+                        System.out.println("Enter Car's make");
                         String make = in.readLine();
-                        System.out.println("Enter mechanic's model");
+                        System.out.println("Enter Car's model");
                         String model = in.readLine();
-                        System.out.println("Enter customer's year");
+                        System.out.println("Enter Car's year");
                         int year = Integer.parseInt(in.readLine());
-
-                        AddCustomer(esql);
-
 
                         query = "INSERT INTO Car(vin, make, model, year) VALUES(\'" + vin + "\', \'" + make + "\', \'" + model + "\', " + year + ");";
                         esql.executeUpdate(query);
