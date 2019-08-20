@@ -331,7 +331,7 @@ public class MechanicShop{
 			System.out.println("Enter customer's address");
 			String address = in.readLine();
 			
-			String query = "INSERT INTO Customer(id, fname, lname, phone, address) VALUES(" + id + ", \'" + fname + "\', \'" + lname + "\', \'" + phone + "\', \'" + address + "\');";
+			query = "INSERT INTO Customer(id, fname, lname, phone, address) VALUES(" + id + ", \'" + fname + "\', \'" + lname + "\', \'" + phone + "\', \'" + address + "\');";
 			esql.executeUpdate(query);
 			
 			int rowCount = esql.executeQuery (query);
@@ -357,7 +357,7 @@ public class MechanicShop{
 			System.out.println("Enter mechanic's experience");
 			int experience = Integer.parseInt(in.readLine());
 			
-			String query = "INSERT INTO Mechanic(id, fname, lname, experience) VALUES(" + id + ", \'" + fname + "\', \'" + lname + "\', " + experience + ");";
+			query = "INSERT INTO Mechanic(id, fname, lname, experience) VALUES(" + id + ", \'" + fname + "\', \'" + lname + "\', " + experience + ");";
 			esql.executeUpdate(query);
 			
 			int rowCount = esql.executeQuery (query);
