@@ -381,7 +381,16 @@ public class MechanicShop{
 			System.out.println("Enter mechanic's model");
 			String model = in.readLine();
 			System.out.println("Enter customer's year");
-			String year = in.readLine();
+			int year = Integer.parseInt(in.readLine());
+			
+			query = "INSERT INTO Car(vin, make, model, year) VALUES(\'" + vin + "\', \'" + make + "\', \'" + model + "\', " + year + ");";
+			esql.executeUpdate(query);
+			
+			query = String.format("SELECT c.* FROM Car c WHERE vin = %s", vin);
+			
+			int rowCount = esql.executeQueryAndPrintResult (query);
+			System.out.println ("total row(s): " + rowCount);
+			
 		}catch(Exception e) {
 			System.err.println (e.getMessage ());
 		}
