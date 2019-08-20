@@ -334,7 +334,9 @@ public class MechanicShop{
 			query = "INSERT INTO Customer(id, fname, lname, phone, address) VALUES(" + id + ", \'" + fname + "\', \'" + lname + "\', \'" + phone + "\', \'" + address + "\');";
 			esql.executeUpdate(query);
 			
-			int rowCount = esql.executeQuery (query);
+			query = String.format("SELECT c.* FROM customer c WHERE id = %d", id);
+			
+			int rowCount = esql.executeQueryAndPrintResult (query);
 			System.out.println ("total row(s): " + rowCount);
 					      
 		}catch(Exception e)
@@ -360,7 +362,9 @@ public class MechanicShop{
 			query = "INSERT INTO Mechanic(id, fname, lname, experience) VALUES(" + id + ", \'" + fname + "\', \'" + lname + "\', " + experience + ");";
 			esql.executeUpdate(query);
 			
-			int rowCount = esql.executeQuery (query);
+			query = String.format("SELECT m.* FROM Mechanic m WHERE id = %d", id);
+			
+			int rowCount = esql.executeQueryAndPrintResult (query);
 			System.out.println ("total row(s): " + rowCount);
 					      
 		}catch(Exception e) {
