@@ -443,7 +443,7 @@ public class MechanicShop{
 	public static void InsertServiceRequest(MechanicShop esql){//4
 		try {
 			System.out.println("Enter service request's rid");
-			String rin = in.readLine();
+			String rid = in.readLine();
 			System.out.println("Enter service request's date");
 			String date = in.readLine();
 			System.out.println("Enter service request's odometer");
@@ -458,7 +458,7 @@ public class MechanicShop{
 	public static void CloseServiceRequest(MechanicShop esql) throws Exception{//5
 		try {
 			System.out.println("Enter service request's wid");
-			String win = in.readLine();
+			String wid = in.readLine();
 			System.out.println("Enter service request's date");
 			String date = in.readLine();
 			System.out.println("Enter service request's comment");
