@@ -431,7 +431,7 @@ public class MechanicShop{
 
                         query = String.format("SELECT c.* FROM Car c WHERE vin = '%s'", vin);
 
-                        int rowCount = esql.executeQueryAndPrintResult (query);
+                        int rowCount = esql.executeQueryAndPrintResult(query);
                         System.out.println ("total row(s): " + rowCount);
 
 			
@@ -442,14 +442,22 @@ public class MechanicShop{
 	
 	public static void InsertServiceRequest(MechanicShop esql){//4
 		try {
-			System.out.println("Enter service request's rid");
-			String rid = in.readLine();
-			System.out.println("Enter service request's date");
-			String date = in.readLine();
-			System.out.println("Enter service request's odometer");
-			String odometer = in.readLine();
-			System.out.println("Enter service request's complain");
-			String complain = in.readLine();
+			System.out.println("Enter last name of Customer");
+			String lname = in.readLine();
+			String query = String.format("SELECT c.* FROM Customer c WHERE c.lname = '%s'", lname);
+			if (esql.executeQueryAndPrintResult(query) != 0) {
+				System.out.println("Please select the customer from the list associated with the id");
+				int id_input = Integer.parseInt(in.readLine());
+				String query = String.format("SELECT c.* FROM Customer c WHERE c.id = %d", id_input);
+				if (esql.executeQueryAndPrintResult(query) != 0) {
+					String query = String.format("SELECT c.* FROM Cars c Owns o WHERE c.vin = o.car_vin AND o.customer_id = %d", id_input);
+					if (esql.executeQueryAndPrintResult(query) != 0) {
+						System.out.println("Please select the car from the list associated with the vin");
+						String vin_input = in.readLine();
+					}
+				}
+			}
+			
 		}catch(Exception e) {
 			System.err.println (e.getMessage ());
 		}
@@ -457,14 +465,7 @@ public class MechanicShop{
 	
 	public static void CloseServiceRequest(MechanicShop esql) throws Exception{//5
 		try {
-			System.out.println("Enter service request's wid");
-			String wid = in.readLine();
-			System.out.println("Enter service request's date");
-			String date = in.readLine();
-			System.out.println("Enter service request's comment");
-			String comment = in.readLine();
-			System.out.println("Enter service request's bill");
-			String bill = in.readLine();
+			
 		}catch(Exception e) {
 			System.err.println (e.getMessage ());
 		}
