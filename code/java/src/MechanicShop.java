@@ -318,26 +318,17 @@ public class MechanicShop{
 			System.out.println ("total row(s): " + rowCount);
 			*/
 			
-			System.out.println("Enter Customer's id");
-                        String id = in.readLine();
-
-                        String query = String.format("SELECT c.* FROM Customer c WHERE c.id = '%s'", id);
-
-                        if (esql.executeQueryAndPrintResult(query) != 0) {
-                                throw new RuntimeException("Customer id already exists\n");
-                        }
-			
-			query = String.format("SELECT MAX(id) FROM Customer");
+			String query = String.format("SELECT MAX(id) FROM Customer");
 			List<List<String>> data = esql.executeQueryAndReturnResult(query);
 			int id = Integer.parseInt(data.get(0).get(0)) + 1;
 			
-			System.out.println("Enter customer's first name");
+			System.out.println("Please enter customer's first name: ");
 			String fname = in.readLine();
-			System.out.println("Enter customer's last name");
+			System.out.println("Please enter customer's last name: ");
 			String lname = in.readLine();
-			System.out.println("Enter customer's phone");
+			System.out.println("Please enter customer's phone: ");
 			String phone = in.readLine();
-			System.out.println("Enter customer's address");
+			System.out.println("Please enter customer's address: ");
 			String address = in.readLine();
 			
 			query = "INSERT INTO Customer(id, fname, lname, phone, address) VALUES(" + id + ", \'" + fname + "\', \'" + lname + "\', \'" + phone + "\', \'" + address + "\');";
@@ -357,24 +348,15 @@ public class MechanicShop{
 	
 	public static void AddMechanic(MechanicShop esql){//2
 		try {
-			System.out.println("Enter Mechanic's id");
-                        String id = in.readLine();
-
-                        String query = String.format("SELECT m.* FROM Mechanic m WHERE m.id = '%d'", id);
-
-                        if (esql.executeQueryAndPrintResult(query) != 0) {
-                                throw new RuntimeException("Mechanic id already exists\n");
-                        }
-			
-			query = String.format("SELECT MAX(id) FROM Mechanic");
+			String query = String.format("SELECT MAX(id) FROM Mechanic");
 			List<List<String>> data = esql.executeQueryAndReturnResult(query);
 			int id = Integer.parseInt(data.get(0).get(0)) + 1;
 			
-			System.out.println("Enter mechanic's first name");
+			System.out.println("Please enter mechanic's first name: ");
 			String fname = in.readLine();
-			System.out.println("Enter mechanic's last name");
+			System.out.println("Please enter mechanic's last name: ");
 			String lname = in.readLine();
-			System.out.println("Enter mechanic's experience");
+			System.out.println("Please enter mechanic's experience: ");
 			int experience = Integer.parseInt(in.readLine());
 			
 			query = "INSERT INTO Mechanic(id, fname, lname, experience) VALUES(" + id + ", \'" + fname + "\', \'" + lname + "\', " + experience + ");";
@@ -392,30 +374,30 @@ public class MechanicShop{
 	
 	public static void AddCar(MechanicShop esql){//3
 		try {
-			System.out.println("Enter the Car's vin");
+			
+			//Check if the customer id you enter is valid
+			System.out.print1n("Please enter the Customer id of the Car: ");
+			int cust_id = Integer.parseInt(in.readLine());
+			String query = String.format("SELECT c.id FROM Customer c WHERE id = '%d'", cust_id);
+			if (esql.queryExecute(query) == 0) {
+				throw new RuntimeException("Invalid Customer id");
+			}
+			
+			System.out.println("Please enter the Car's vin:");
                         String vin = in.readLine();
 			
 			//Check if the Car's vin you enter is valid
-                        String query = String.format("SELECT o.* FROM Owns o WHERE o.car_vin = '%s'", vin);
-
+                        query = String.format("SELECT o.* FROM Owns o WHERE o.car_vin = '%s'", vin);
                         if (esql.executeQueryAndPrintResult(query) != 0) {
                                 throw new RuntimeException("Car vin already exists\n");
                         }
-
-                        System.out.println("Enter Car's make");
-                        String make = in.readLine();
-                        System.out.println("Enter Car's model");
-                        String model = in.readLine();
-                        System.out.println("Enter Car's year");
-                        int year = Integer.parseInt(in.readLine());
 			
-			//Check if the customer id you enter is valid
-			System.out.print1n("Enter the Customer id of the Car") 
-			int cust_id = Integer.parseInt(in.readLine());
-			query = String.format("SELECT c.id FROM Customer c WHERE id = '%d'", cust_id);
-			if (esql.queryExecute(query) == 0) {
-				throw new RuntimeException("Invalid Customer id");
-			}	
+                        System.out.println("Please enter Car's make: ");
+                        String make = in.readLine();
+                        System.out.println("Please enter Car's model: ");
+                        String model = in.readLine();
+                        System.out.println("Please enter Car's year: ");
+                        int year = Integer.parseInt(in.readLine());	
 
 			//Update Owns
 			query = String.format("SELECT MAX(ownership_id) FROM Owns");
@@ -442,18 +424,19 @@ public class MechanicShop{
 	
 	public static void InsertServiceRequest(MechanicShop esql){//4
 		try {
-			System.out.println("Enter last name of Customer");
+			System.out.println("Please enter last name of Customer: ");
 			String lname = in.readLine();
 			String query = String.format("SELECT c.* FROM Customer c WHERE c.lname = '%s'", lname);
 			if (esql.executeQueryAndPrintResult(query) != 0) {
-				System.out.println("Please select the customer from the list associated with the id");
+				System.out.println("Please select the customer from the list associated with the id: ");
 				int id_input = Integer.parseInt(in.readLine());
 				String query = String.format("SELECT c.* FROM Customer c WHERE c.id = %d", id_input);
-				if (esql.executeQueryAndPrintResult(query) != 0) {
+				if (esql.executeQueryAndPrintResult(query) != 0) {	
 					String query = String.format("SELECT c.* FROM Cars c Owns o WHERE c.vin = o.car_vin AND o.customer_id = %d", id_input);
 					if (esql.executeQueryAndPrintResult(query) != 0) {
-						System.out.println("Please select the car from the list associated with the vin");
+						System.out.println("Please select the car from the list associated with the vin: ");
 						String vin_input = in.readLine();
+						query = String.format("SELECT c.* FROM Customer c WHERE c.id = %d", id_input);
 					}
 				}
 			}
