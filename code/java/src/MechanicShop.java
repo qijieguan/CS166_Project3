@@ -426,7 +426,7 @@ public class MechanicShop{
 		try {
 			System.out.println("Please enter last name of Customer: ");
 			String lname = in.readLine();
-			String query = String.format("SELECT c.* FROM Customer c WHERE c.lname = '%s'", lname);
+			String query = String.format("SELECT c.id, c.lname, c.fname FROM Customer c WHERE c.lname = '%s'", lname);
 			if (esql.executeQueryAndPrintResult(query) != 0) {
 				System.out.println("Please select the customer from the list associated with the id: ");
 				int id_input = Integer.parseInt(in.readLine());
