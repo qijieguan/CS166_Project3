@@ -334,7 +334,7 @@ public class MechanicShop{
 			query = "INSERT INTO Customer(id, fname, lname, phone, address) VALUES(" + id + ", \'" + fname + "\', \'" + lname + "\', \'" + phone + "\', \'" + address + "\');";
 			esql.executeUpdate(query);
 			
-			query = String.format("SELECT c.* FROM customer c WHERE id = %d", id);
+			query = String.format("SELECT c.* FROM customer c WHERE c.id = %d", id);
 			
 			int rowCount = esql.executeQueryAndPrintResult (query);
 			System.out.println ("total row(s): " + rowCount);
@@ -362,7 +362,7 @@ public class MechanicShop{
 			query = "INSERT INTO Mechanic(id, fname, lname, experience) VALUES(" + id + ", \'" + fname + "\', \'" + lname + "\', " + experience + ");";
 			esql.executeUpdate(query);
 			
-			query = String.format("SELECT m.* FROM Mechanic m WHERE id = %d", id);
+			query = String.format("SELECT m.* FROM Mechanic m WHERE c.id = %d", id);
 			
 			int rowCount = esql.executeQueryAndPrintResult (query);
 			System.out.println ("total row(s): " + rowCount);
@@ -376,14 +376,14 @@ public class MechanicShop{
 		try {
 			
 			//Check if the customer id you enter is valid
-			System.out.print1n("Please enter the Customer id of the Car: ");
+			System.out.println("Please enter the Customer id of the Car: ");
 			int cust_id = Integer.parseInt(in.readLine());
-			String query = String.format("SELECT c.id FROM Customer c WHERE id = '%d'", cust_id);
-			if (esql.queryExecute(query) == 0) {
-				throw new RuntimeException("Invalid Customer id");
+			String query = String.format("SELECT c.id FROM Customer c WHERE c.id = '%d'", cust_id);
+			if (esql.executeQuery(query) == 0) {
+				throw new RuntimeException("Invalid Customer id\n");
 			}
 			
-			System.out.println("Please enter the Car's vin:");
+			System.out.println("Please enter the Car's vin: ");
                         String vin = in.readLine();
 			
 			//Check if the Car's vin you enter is valid
@@ -404,14 +404,14 @@ public class MechanicShop{
 			List<List<String>> data = esql.executeQueryAndReturnResult(query);
 			int owner_id = Integer.parseInt(data.get(0).get(0)) + 1;
 			
-			query = "INSERT INTO Owns(ownership_id, customer_id, car_vin) VALUES(" + owner_id + ", " + cust_id + ", \'" + car_vin + "\');";
+			query = "INSERT INTO Owns(ownership_id, customer_id, car_vin) VALUES(" + owner_id + ", " + cust_id + ", \'" + vin + "\');";
                         esql.executeUpdate(query);
 			
 			//Update Cars
                         query = "INSERT INTO Car(vin, make, model, year) VALUES(\'" + vin + "\', \'" + make + "\', \'" + model + "\', " + year + ");";
                         esql.executeUpdate(query);
 
-                        query = String.format("SELECT c.* FROM Car c WHERE vin = '%s'", vin);
+                        query = String.format("SELECT c.* FROM Car c WHERE c.vin = '%s'", vin);
 
                         int rowCount = esql.executeQueryAndPrintResult(query);
                         System.out.println ("total row(s): " + rowCount);
@@ -430,9 +430,9 @@ public class MechanicShop{
 			if (esql.executeQueryAndPrintResult(query) != 0) {
 				System.out.println("Please select the customer from the list associated with the id: ");
 				int id_input = Integer.parseInt(in.readLine());
-				String query = String.format("SELECT c.* FROM Customer c WHERE c.id = %d", id_input);
+				query = String.format("SELECT c.* FROM Customer c WHERE c.id = %d", id_input);
 				if (esql.executeQueryAndPrintResult(query) != 0) {	
-					String query = String.format("SELECT c.* FROM Cars c Owns o WHERE c.vin = o.car_vin AND o.customer_id = %d", id_input);
+					query = String.format("SELECT c.* FROM Cars c Owns o WHERE c.vin = o.car_vin AND o.customer_id = %d", id_input);
 					if (esql.executeQueryAndPrintResult(query) != 0) {
 						System.out.println("Please select the car from the list associated with the vin: ");
 						String vin_input = in.readLine();
