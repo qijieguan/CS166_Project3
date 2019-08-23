@@ -424,25 +424,39 @@ public class MechanicShop{
 	
 	public static void InsertServiceRequest(MechanicShop esql){//4
 		try {
+			//Step 1: Enter customer's last name
 			System.out.println("\nPlease enter last name of Customer: ");
 			String lname = in.readLine();
 			String query = String.format("SELECT c.id, c.lname, c.fname FROM Customer c WHERE c.lname = '%s'", lname);
 			
-			if (esql.executeQueryAndPrintResult(query) != 0) {
-				System.out.println("\nPlease select the customer by the id: ");
-				int id_input = Integer.parseInt(in.readLine());
-				query = String.format("SELECT c.* FROM Customer c WHERE c.id = %d", id_input);
-				
-				if (esql.executeQueryAndPrintResult(query) != 0) {	
-					query = String.format("SELECT c.* FROM Car c, Owns o WHERE c.vin = o.car_vin AND o.customer_id = %d", id_input);
-					if (esql.executeQueryAndPrintResult(query) != 0) {
-						System.out.println("\nPlease select the car from the list associated with the vin: ");
-						String vin_input = in.readLine();
-						query = String.format("SELECT c.* FROM Car c WHERE c.vin = '%s'", vin_input);
-                        			esql.executeQueryAndPrintResult(query);
-					}
-				}
+			if (esql.executeQuery(query) == 0) {
+				throw new RuntimeException("\nThere isn't a customer with this last name");
 			}
+			esql.executeQueryAndPrintResult(query);
+			
+			//Step 2 (optional): Pick the customer by his/her id
+			System.out.println("\nPlease select the customer by the id: ");
+			int id_input = Integer.parseInt(in.readLine());
+			query = String.format("SELECT c.* FROM Customer c WHERE c.id = %d", id_input);
+
+			if (esql.executeQuery(query) == 0) {
+				throw new RuntimeException("\nInvalid customer id");
+			}
+			esql.executeQueryAndPrintResult(query);
+			
+			//Step 3: List all the cars of the selected customer
+			query = String.format("SELECT c.* FROM Car c, Owns o WHERE c.vin = o.car_vin AND o.customer_id = %d", id_input);
+			if (esql.executeQuery(query) == 0) {
+				throw new RuntimeException("\nThis customer does not have a car");
+			}
+			esql.executeQueryAndPrintResult(query);
+			
+			//Step 4: Select the car for service request
+			System.out.println("\nPlease select the car from the list associated with the vin: ");
+			String vin_input = in.readLine();
+			query = String.format("SELECT c.* FROM Car c WHERE c.vin = '%s'", vin_input);
+			esql.executeQueryAndPrintResult(query);
+			
 			
 			System.out.println("\nPlease enter the service request's rid: ");
                         int rid = Integer.parseInt(in.readLine());
@@ -454,7 +468,7 @@ public class MechanicShop{
                         String complain = in.readLine();
 			
 			//Update Service Request
-			query = "INSERT INTO Service_Request(rid, customer_id, car_vin, date, odometer, complain) VALUES(" + rid + ", " + id_input + ", \'" + vin_input + "\', \'" + date + "\', " + odometer + ", \'" + complain + "\');"
+			query = "INSERT INTO Service_Request(rid, customer_id, car_vin, date, odometer, complain) VALUES(" + rid + ", " + id_input + ", \'" + vin_input + "\', \'" + date + "\', " + odometer + ", \'" + complain + "\');";
 			esql.executeUpdate(query);
 
                         query = String.format("SELECT s.* FROM Service_Request s WHERE s.car_vin = '%s'", vin_input);
