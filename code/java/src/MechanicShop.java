@@ -432,7 +432,7 @@ public class MechanicShop{
 				int id_input = Integer.parseInt(in.readLine());
 				query = String.format("SELECT c.* FROM Customer c WHERE c.id = %d", id_input);
 				if (esql.executeQueryAndPrintResult(query) != 0) {	
-					query = String.format("SELECT c.* FROM Cars c, Owns o WHERE c.vin = o.car_vin AND o.customer_id = %d", id_input);
+					query = String.format("SELECT c.* FROM Car c, Owns o WHERE c.vin = o.car_vin AND o.customer_id = %d", id_input);
 					if (esql.executeQueryAndPrintResult(query) != 0) {
 						System.out.println("\nPlease select the car from the list associated with the vin: ");
 						String vin_input = in.readLine();
