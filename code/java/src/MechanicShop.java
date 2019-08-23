@@ -331,6 +331,7 @@ public class MechanicShop{
 			System.out.println("\nPlease enter customer's address: ");
 			String address = in.readLine();
 			
+			//Updates Customer query
 			query = "INSERT INTO Customer(id, fname, lname, phone, address) VALUES(" + id + ", \'" + fname + "\', \'" + lname + "\', \'" + phone + "\', \'" + address + "\');";
 			esql.executeUpdate(query);
 			
@@ -359,10 +360,11 @@ public class MechanicShop{
 			System.out.println("\nPlease enter mechanic's experience: ");
 			int experience = Integer.parseInt(in.readLine());
 			
+			//Updates Mechanic query
 			query = "INSERT INTO Mechanic(id, fname, lname, experience) VALUES(" + id + ", \'" + fname + "\', \'" + lname + "\', " + experience + ");";
 			esql.executeUpdate(query);
 			
-			query = String.format("SELECT m.* FROM Mechanic m WHERE c.id = %d", id);
+			query = String.format("SELECT m.* FROM Mechanic m WHERE m.id = %d", id);
 			
 			int rowCount = esql.executeQueryAndPrintResult (query);
 			System.out.println ("total row(s): " + rowCount);
@@ -399,7 +401,7 @@ public class MechanicShop{
                         System.out.println("\nPlease enter Car's year: ");
                         int year = Integer.parseInt(in.readLine());	
 
-			//Update Owns
+			//Updates Owns query
 			query = String.format("SELECT MAX(ownership_id) FROM Owns");
 			List<List<String>> data = esql.executeQueryAndReturnResult(query);
 			int owner_id = Integer.parseInt(data.get(0).get(0)) + 1;
@@ -407,7 +409,7 @@ public class MechanicShop{
 			query = "INSERT INTO Owns(ownership_id, customer_id, car_vin) VALUES(" + owner_id + ", " + cust_id + ", \'" + vin + "\');";
                         esql.executeUpdate(query);
 			
-			//Update Cars
+			//Updates Car query
                         query = "INSERT INTO Car(vin, make, model, year) VALUES(\'" + vin + "\', \'" + make + "\', \'" + model + "\', " + year + ");";
                         esql.executeUpdate(query);
 
@@ -434,7 +436,7 @@ public class MechanicShop{
 			}
 			esql.executeQueryAndPrintResult(query);
 			
-			//Step 2 (optional): Pick the customer by his/her id
+			//Step 2: Pick the customer by his/her id
 			System.out.println("\nPlease select the customer by the id: ");
 			int id_input = Integer.parseInt(in.readLine());
 			query = String.format("SELECT c.* FROM Customer c WHERE c.id = %d", id_input);
@@ -457,7 +459,7 @@ public class MechanicShop{
 			query = String.format("SELECT c.* FROM Car c WHERE c.vin = '%s'", vin_input);
 			esql.executeQueryAndPrintResult(query);
 			
-			
+			//Step 5: Enter service request information
 			query = String.format("SELECT MAX(rid) FROM Service_Request");
 			List<List<String>> data = esql.executeQueryAndReturnResult(query);
 			int rid = Integer.parseInt(data.get(0).get(0)) + 1;
@@ -469,7 +471,7 @@ public class MechanicShop{
 			System.out.println("\nPlease enter service request's complaint: ");
                         String complain = in.readLine();
 			
-			//Update Service Request
+			//Updates Service_Request query
 			query = "INSERT INTO Service_Request(rid, customer_id, car_vin, date, odometer, complain) VALUES(" + rid + ", " + id_input + ", \'" + vin_input + "\', \'" + date + "\', " + odometer + ", \'" + complain + "\');";
 			esql.executeUpdate(query);
 
@@ -486,6 +488,43 @@ public class MechanicShop{
 	
 	public static void CloseServiceRequest(MechanicShop esql) throws Exception{//5
 		try {
+			//Step 1: Enter the service request id
+			System.out.println("\nPlease enter the service request id: ");
+			String rid = Integer.parseInt(in.readLine());
+			String query = String.format("SELECT s.* FROM Service_Request s WHERE s.rid = %d", rid);
+			if (esql.executeQuery(query) == 0) {
+				throw new RuntimeException("\nInvalid rid");
+			}
+			
+			//Step 2: Enter the Mechanic id
+			System.out.println("\nPlease enter the Mechanic's id: ");
+			String mid = Integer.parseInt(in.readLine());
+			String query = String.format("SELECT m.* FROM Mechanic m WHERE m.id = %d", mid);
+			if (esql.executeQuery(query) == 0) {
+				throw new RuntimeException("\nInvalid Mechanic id");
+			}
+			
+			//Step 3: Enter closed request information
+			query = String.format("SELECT MAX(wid) FROM Closed_Request");
+			List<List<String>> data = esql.executeQueryAndReturnResult(query);
+			int wid = Integer.parseInt(data.get(0).get(0)) + 1;
+			
+			System.out.println("\nPlease enter closed request's date: ");
+                        String date = in.readLine();
+			System.out.println("\nPlease enter closed request's comment: ");
+                        String comment = in.readLine();
+			System.out.println("\nPlease enter closed request's bill: ");
+                        int bill = Integer.parseInt(in.readLine());
+			
+			//Updates Closed_Request 
+			query = "INSERT INTO Closed_Request(wid, rid, mid, date, comment, bill) VALUES(" + wid + ", " + rid + ", " + mid + ", \'" + date + "\', \'" + comment + "\', " + bill + ");";
+			esql.executeUpdate(query);
+
+                        query = String.format("SELECT c.* FROM Closed_Request c WHERE c.wid = %d", wid);
+
+                        int rowCount = esql.executeQueryAndPrintResult(query);
+                        System.out.println ("total row(s): " + rowCount);
+
 			
 		}catch(Exception e) {
 			System.err.println (e.getMessage ());
