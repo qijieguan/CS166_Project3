@@ -458,7 +458,7 @@ public class MechanicShop{
 			esql.executeQueryAndPrintResult(query);
 			
 			
-			String query = String.format("SELECT MAX(rid) FROM Service_Request");
+			query = String.format("SELECT MAX(rid) FROM Service_Request");
 			List<List<String>> data = esql.executeQueryAndReturnResult(query);
 			int rid = Integer.parseInt(data.get(0).get(0)) + 1;
 			
@@ -473,7 +473,7 @@ public class MechanicShop{
 			query = "INSERT INTO Service_Request(rid, customer_id, car_vin, date, odometer, complain) VALUES(" + rid + ", " + id_input + ", \'" + vin_input + "\', \'" + date + "\', " + odometer + ", \'" + complain + "\');";
 			esql.executeUpdate(query);
 
-                        query = String.format("SELECT s.* FROM Service_Request s WHERE s.rid = %d, s.customer_id = %d, s.car_vin = '%s'", rid, id_input, vin_input);
+                        query = String.format("SELECT s.* FROM Service_Request s WHERE s.rid = %d", rid);
 
                         int rowCount = esql.executeQueryAndPrintResult(query);
                         System.out.println ("total row(s): " + rowCount);
