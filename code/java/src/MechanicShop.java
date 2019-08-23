@@ -490,7 +490,7 @@ public class MechanicShop{
 		try {
 			//Step 1: Enter the service request id
 			System.out.println("\nPlease enter the service request id: ");
-			String rid = Integer.parseInt(in.readLine());
+			int rid = Integer.parseInt(in.readLine());
 			String query = String.format("SELECT s.* FROM Service_Request s WHERE s.rid = %d", rid);
 			if (esql.executeQuery(query) == 0) {
 				throw new RuntimeException("\nInvalid rid");
@@ -498,8 +498,8 @@ public class MechanicShop{
 			
 			//Step 2: Enter the Mechanic id
 			System.out.println("\nPlease enter the Mechanic's id: ");
-			String mid = Integer.parseInt(in.readLine());
-			String query = String.format("SELECT m.* FROM Mechanic m WHERE m.id = %d", mid);
+			int mid = Integer.parseInt(in.readLine());
+			query = String.format("SELECT m.* FROM Mechanic m WHERE m.id = %d", mid);
 			if (esql.executeQuery(query) == 0) {
 				throw new RuntimeException("\nInvalid Mechanic id");
 			}
