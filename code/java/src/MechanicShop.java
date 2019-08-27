@@ -545,20 +545,18 @@ public class MechanicShop{
 	}
 	
 	public static void ListCustomersWithBillLessThan100(MechanicShop esql){//6
-		/*
+		
 		String query = String.format("SELECT C.id, C.fname, C.lname, c.bill FROM Customer C, Service_Request s, Closed_Request c WHERE C.id = s.customer.id, s.rid = c.rid AND c.bill < 100");
 		esql.executeQueryAndPrintResult(query);
-		*/
 	}
 	
 	public static void ListCustomersWithMoreThan20Cars(MechanicShop esql){//7
 	}
 	
 	public static void ListCarsBefore1995With50000Milles(MechanicShop esql){//8
-		/*
+		
 		String query = String.format("SELECT c.car FROM Car c, Service_Request s WHERE c.vin = s.car_vin, c.year < 1995 AND odometer = 50000");
 		esql.executeQueryAndPrintResult(query);
-		*/
 		
 	}
 	
