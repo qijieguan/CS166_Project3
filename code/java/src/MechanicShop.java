@@ -331,7 +331,7 @@ public class MechanicShop{
 			if (esql.executeQueryAndPrintResult(query) != 0) {
 				System.out.println("\nIs this the customer you wish to add (y/n) ");
 				String input = in.readLine();
-				if (input.equal("y")) {
+				if (input.equals("y")) {
 					throw new RuntimeException("This customer has already been added. Thank you!");
 				}
 			}
@@ -372,7 +372,7 @@ public class MechanicShop{
 			if (esql.executeQueryAndPrintResult(query) != 0) {
 				System.out.println("\nIs this the mechanic you wish to add (y/n) ");
 				String input = in.readLine();
-				if (input.equal("y")) {
+				if (input.equals("y")) {
 					throw new RuntimeException("This mechanic has already been added. Thank you!");
 				}
 			}
@@ -456,7 +456,7 @@ public class MechanicShop{
 				if (esql.executeQuery(query) == 0) {
 					System.out.println("\nThere isn't a customer with this last name. Add a Customer (y/n)?");
 					String input = in.readLine();
-					if (input.equal("y")) {
+					if (input.equals("y")) {
 						AddCustomer(esql);
 						System.out.println("\nThis customer doesn't have a car. Please add car");
 						AddCar(esql);
