@@ -566,7 +566,7 @@ public class MechanicShop{
 	
 	public static void ListCustomersWithBillLessThan100(MechanicShop esql){//6
 		try{
-			String query = String.format("SELECT C.fname, C.lname, c.date, c.comment, c.bill FROM Customer C, Service_Request s, Closed_Request c WHERE C.id = s.customer.id AND s.rid = c.rid AND c.bill < 100");
+			String query = String.format("SELECT c.fname, c.lname, cr.date, cr.comment, cr.bill FROM Customer c, Service_Request sr, Closed_Request cr WHERE c.id = sr.customer_id AND sr.rid = cr.rid AND cr.bill < 100");
 			esql.executeQueryAndPrintResult(query);
 		}catch(Exception e) {
 			System.err.println (e.getMessage ());
