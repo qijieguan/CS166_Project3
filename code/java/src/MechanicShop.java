@@ -402,7 +402,7 @@ public class MechanicShop{
 			int cust_id = Integer.parseInt(in.readLine());
 			String query = String.format("SELECT c.id FROM Customer c WHERE c.id = '%d'", cust_id);
 			if (esql.executeQuery(query) == 0) {
-				throw new RuntimeException("\nInvalid Customer id");
+				throw new RuntimeException("\nInvalid Customer id.");
 			}
 			
 			System.out.println("\nPlease enter the Car's vin: ");
@@ -411,7 +411,7 @@ public class MechanicShop{
 			//Check if the Car's vin you enter is valid
 			query = String.format("SELECT o.* FROM Owns o WHERE o.car_vin = '%s'", vin);
 			if (esql.executeQueryAndPrintResult(query) != 0) {
-				throw new RuntimeException("\nCar vin already exists");
+				throw new RuntimeException("\nCar vin already exists.");
 			}
 			
                         System.out.println("\nPlease enter Car's make: ");
@@ -463,7 +463,7 @@ public class MechanicShop{
 						continue;
 					}
 					else {
-						throw new RuntimeException("\nExit Done");
+						throw new RuntimeException("\nExit Done.");
 					}
 				}
 				else {
@@ -477,7 +477,7 @@ public class MechanicShop{
 			int id_input = Integer.parseInt(in.readLine());
 			query = String.format("SELECT c.* FROM Customer c WHERE c.id = %d", id_input);
 			if (esql.executeQuery(query) == 0) {
-				throw new RuntimeException("\nInvalid customer id");
+				throw new RuntimeException("\nInvalid customer id.");
 			}
 			esql.executeQueryAndPrintResult(query);
 			
@@ -528,9 +528,16 @@ public class MechanicShop{
 			System.out.println("\n");
 			String query = String.format("SELECT s.* FROM Service_Request s WHERE s.rid = %d", rid);
 			if (esql.executeQueryAndPrintResult(query) != 0) {
+				System.out.println("\n");
+				query = String.format("SELECT c.* FROM Closed_Request c WHERE c.rid = %d", rid);
+			        if (esql.executeQueryAndPrintResult(query) == 0) {
+				}
+				else {
+					throw new RuntimeException("\nThis service request is already closed.");
+				}
 			}
 			else {
-				throw new RuntimeException("\nService Request does not exist");
+				throw new RuntimeException("\nService Request does not exist.");
 			}
 			
 			//Step 2: Enter the Mechanic id
@@ -541,7 +548,7 @@ public class MechanicShop{
 			if (esql.executeQueryAndPrintResult(query) != 0) {
 			}
 			else {
-				throw new RuntimeException("\nInvalid Mechanic id");
+				throw new RuntimeException("\nInvalid Mechanic id.");
 			}
 			
 			//Step 3: Enter closed request information
