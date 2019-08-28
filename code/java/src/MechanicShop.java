@@ -328,11 +328,11 @@ public class MechanicShop{
 			String lname = in.readLine();
 			
 			query = String.format("SELECT c.* FROM Customer c WHERE c.fname = '%s' AND c.lname = '%s'");
-			if (esql.executeQueryAndPrintResult != 0) {
+			if (esql.executeQueryAndPrintResult(query) != 0) {
 				System.out.println("\nIs this the customer you wish to add (y/n) ");
-				string input = in.readLine();
+				String input = in.readLine();
 				if (input.equal("y")) {
-					throw new runtimeException("This customer has already been added. Thank you!");
+					throw new RuntimeException("This customer has already been added. Thank you!");
 				}
 			}
 			
@@ -369,11 +369,11 @@ public class MechanicShop{
 			String lname = in.readLine();
 			
 			query = String.format("SELECT m.* FROM Mechanic m WHERE m.fname = '%s' AND m.lname = '%s'");
-			if (esql.executeQueryAndPrintResult != 0) {
+			if (esql.executeQueryAndPrintResult(query) != 0) {
 				System.out.println("\nIs this the mechanic you wish to add (y/n) ");
-				string input = in.readLine();
+				String input = in.readLine();
 				if (input.equal("y")) {
-					throw new runtimeException("This mechanic has already been added. Thank you!");
+					throw new RuntimeException("This mechanic has already been added. Thank you!");
 				}
 			}
 			
@@ -411,7 +411,7 @@ public class MechanicShop{
 			//Check if the Car's vin you enter is valid
 			query = String.format("SELECT o.* FROM Owns o WHERE o.car_vin = '%s'", vin);
 			if (esql.executeQueryAndPrintResult(query) != 0) {
-				throw new runtimeException("\nCar vin already exists");
+				throw new RuntimeException("\nCar vin already exists");
 			}
 			
                         System.out.println("\nPlease enter Car's make: ");
@@ -454,16 +454,16 @@ public class MechanicShop{
 				query = String.format("SELECT c.id, c.lname, c.fname FROM Customer c WHERE c.lname = '%s'", lname);
 
 				if (esql.executeQuery(query) == 0) {
-					System.outprintln("\nThere isn't a customer with this last name. Add a Customer (y/n)?");
+					System.out.println("\nThere isn't a customer with this last name. Add a Customer (y/n)?");
 					String input = in.readLine();
 					if (input.equal("y")) {
 						AddCustomer(esql);
-						System.outprintln("\nThis customer doesn't have a car. Please add car");
+						System.out.println("\nThis customer doesn't have a car. Please add car");
 						AddCar(esql);
 						continue;
 					}
 					else {
-						throw new runtimeException("\nExit Done");
+						throw new RuntimeException("\nExit Done");
 					}
 				}
 				else {
@@ -477,7 +477,7 @@ public class MechanicShop{
 			int id_input = Integer.parseInt(in.readLine());
 			query = String.format("SELECT c.* FROM Customer c WHERE c.id = %d", id_input);
 			if (esql.executeQuery(query) == 0) {
-				throw new runtimeException("\nInvalid customer id");
+				throw new RuntimeException("\nInvalid customer id");
 			}
 			esql.executeQueryAndPrintResult(query);
 			
