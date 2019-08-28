@@ -327,7 +327,7 @@ public class MechanicShop{
 			System.out.println("\nPlease enter customer's last name: ");
 			String lname = in.readLine();
 			
-			query = String.format("SELECT c.* FROM Customer c WHERE c.fname = '%s' AND c.lname = '%s'");
+			query = String.format("SELECT c.* FROM Customer c WHERE c.fname = '%s' AND c.lname = '%s'", fname, lname);
 			if (esql.executeQueryAndPrintResult(query) != 0) {
 				System.out.println("\nIs this the customer you wish to add (y/n) ");
 				String input = in.readLine();
@@ -368,7 +368,7 @@ public class MechanicShop{
 			System.out.println("\nPlease enter mechanic's last name: ");
 			String lname = in.readLine();
 			
-			query = String.format("SELECT m.* FROM Mechanic m WHERE m.fname = '%s' AND m.lname = '%s'");
+			query = String.format("SELECT m.* FROM Mechanic m WHERE m.fname = '%s' AND m.lname = '%s'", fname, lname);
 			if (esql.executeQueryAndPrintResult(query) != 0) {
 				System.out.println("\nIs this the mechanic you wish to add (y/n) ");
 				String input = in.readLine();
