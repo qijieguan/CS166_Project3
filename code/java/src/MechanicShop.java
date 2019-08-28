@@ -588,7 +588,7 @@ public class MechanicShop{
 	
 	public static void ListCustomersWithMoreThan20Cars(MechanicShop esql){//7
 		try {
-			String query = String.format("SELECT c.fname AS NAME, c.lname AS LASTNAME, S AS TotalCars FROM (SELECT Customer_id AS T, COUNT(customer_id) AS S FROM Owns GROUP BY (customer_id)) A, Customer C WHERE A.T = c.id AND A.S > 20; *);");
+			String query = String.format("SELECT c.fname AS NAME, c.lname AS LASTNAME, S AS TotalCars FROM (SELECT Customer_id AS T, COUNT(customer_id) AS S FROM Owns GROUP BY (customer_id)) A, Customer C WHERE A.T = c.id AND A.S > 20; *)");
 			esql.executeQueryAndPrintResult(query);
 		}catch(Exception e) {
 			System.err.println (e.getMessage ());
