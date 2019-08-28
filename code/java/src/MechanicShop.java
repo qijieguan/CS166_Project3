@@ -421,16 +421,16 @@ public class MechanicShop{
                         System.out.println("\nPlease enter Car's year: ");
                         int year = Integer.parseInt(in.readLine());	
 
+			//Updates Car query
+                        query = "INSERT INTO Car(vin, make, model, year) VALUES(\'" + vin + "\', \'" + make + "\', \'" + model + "\', " + year + ");";
+                        esql.executeUpdate(query);
+			
 			//Updates Owns query
 			query = String.format("SELECT MAX(ownership_id) FROM Owns");
 			List<List<String>> data = esql.executeQueryAndReturnResult(query);
 			int owner_id = Integer.parseInt(data.get(0).get(0)) + 1;
 			
 			query = "INSERT INTO Owns(ownership_id, customer_id, car_vin) VALUES(" + owner_id + ", " + cust_id + ", \'" + vin + "\');";
-                        esql.executeUpdate(query);
-			
-			//Updates Car query
-                        query = "INSERT INTO Car(vin, make, model, year) VALUES(\'" + vin + "\', \'" + make + "\', \'" + model + "\', " + year + ");";
                         esql.executeUpdate(query);
 
                         query = String.format("SELECT c.* FROM Car c WHERE c.vin = '%s'", vin);
