@@ -326,6 +326,16 @@ public class MechanicShop{
 			String fname = in.readLine();
 			System.out.println("\nPlease enter customer's last name: ");
 			String lname = in.readLine();
+			
+			query = String.format("SELECT c.* FROM Customer c WHERE c.fname = '%s' AND c.lname = '%s'");
+			if (esql.executeQueryAndPrintResult != 0) {
+				System.out.println("\nIs this the customer you wish to add (y/n) ");
+				string input = in.readLine();
+				if (input.equal("y") {
+					throw new runtimeException("This customer has already been added. Thank you!");
+				}
+			}
+			
 			System.out.println("\nPlease enter customer's phone: ");
 			String phone = in.readLine();
 			System.out.println("\nPlease enter customer's address: ");
@@ -357,6 +367,16 @@ public class MechanicShop{
 			String fname = in.readLine();
 			System.out.println("\nPlease enter mechanic's last name: ");
 			String lname = in.readLine();
+			
+			query = String.format("SELECT m.* FROM Mechanic m WHERE m.fname = '%s' AND m.lname = '%s'");
+			if (esql.executeQueryAndPrintResult != 0) {
+				System.out.println("\nIs this the mechanic you wish to add (y/n) ");
+				string input = in.readLine();
+				if (input.equal("y") {
+					throw new runtimeException("This mechanic has already been added. Thank you!");
+				}
+			}
+			
 			System.out.println("\nPlease enter mechanic's experience: ");
 			int experience = Integer.parseInt(in.readLine());
 			
@@ -427,17 +447,18 @@ public class MechanicShop{
 	public static void InsertServiceRequest(MechanicShop esql){//4
 		try {
 			//Step 1: Enter customer's last name
+			String query;
 			while(true) {
 				System.out.println("\nPlease enter last name of Customer: ");
 				String lname = in.readLine();
-				String query = String.format("SELECT c.id, c.lname, c.fname FROM Customer c WHERE c.lname = '%s'", lname);
+				query = String.format("SELECT c.id, c.lname, c.fname FROM Customer c WHERE c.lname = '%s'", lname);
 
 				if (esql.executeQuery(query) == 0) {
-					System.outprintln("\nThere isn't a customer with this last name. Add a Customer (y/n)?"));
+					System.outprintln("\nThere isn't a customer with this last name. Add a Customer (y/n)?");
 					String input = in.readLine();
-					if (input.equal("y") {
+					if (input.equal("y")) {
 						AddCustomer(esql);
-						System.outprintln("\nThis customer doesn't have a car. Please add car"));
+						System.outprintln("\nThis customer doesn't have a car. Please add car");
 						AddCar(esql);
 						continue;
 					}
@@ -518,7 +539,7 @@ public class MechanicShop{
 			}
 			
 			//Step 3: Enter closed request information
-			query = String.format("SELECT MAX(wid) FROM Closed_Request");
+			query = String.format("SELECT MAX(wid) FROM Closed_Request ");
 			List<List<String>> data = esql.executeQueryAndReturnResult(query);
 			int wid = Integer.parseInt(data.get(0).get(0)) + 1;
 			
@@ -537,7 +558,6 @@ public class MechanicShop{
 
                         int rowCount = esql.executeQueryAndPrintResult(query);
                         System.out.println ("total row(s): " + rowCount);
-
 			
 		}catch(Exception e) {
 			System.err.println (e.getMessage ());
@@ -545,28 +565,31 @@ public class MechanicShop{
 	}
 	
 	public static void ListCustomersWithBillLessThan100(MechanicShop esql){//6
-		
-		String query = String.format("SELECT C.id, C.fname, C.lname, c.bill FROM Customer C, Service_Request s, Closed_Request c WHERE C.id = s.customer.id, s.rid = c.rid AND c.bill < 100");
-		esql.executeQueryAndPrintResult(query);
+		try{
+			String query = String.format("SELECT C.fname, C.lname, c.date, c.comment, c.bill FROM Customer C, Service_Request s, Closed_Request c WHERE C.id = s.customer.id AND s.rid = c.rid AND c.bill < 100");
+			esql.executeQueryAndPrintResult(query);
+		}catch(Exception e) {
+			System.err.println (e.getMessage ());
+		}
 	}
 	
 	public static void ListCustomersWithMoreThan20Cars(MechanicShop esql){//7
 	}
 	
 	public static void ListCarsBefore1995With50000Milles(MechanicShop esql){//8
-		
-		String query = String.format("SELECT c.car FROM Car c, Service_Request s WHERE c.vin = s.car_vin, c.year < 1995 AND odometer = 50000");
-		esql.executeQueryAndPrintResult(query);
-		
+		try {
+			String query = String.format("SELECT c.car FROM Car c, Service_Request s WHERE c.vin = s.car_vin AND c.year < 1995 AND odometer < 50000");
+			esql.executeQueryAndPrintResult(query);
+		}catch(Exception e) {
+			System.err.println (e.getMessage ());
+		}	
 	}
 	
 	public static void ListKCarsWithTheMostServices(MechanicShop esql){//9
-		//
 		
 	}
 	
 	public static void ListCustomersInDescendingOrderOfTheirTotalBill(MechanicShop esql){//9
-		//
 		
 	}
 	
