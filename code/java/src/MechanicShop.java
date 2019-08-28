@@ -331,7 +331,7 @@ public class MechanicShop{
 			if (esql.executeQueryAndPrintResult != 0) {
 				System.out.println("\nIs this the customer you wish to add (y/n) ");
 				string input = in.readLine();
-				if (input.equal("y") {
+				if (input.equal("y")) {
 					throw new runtimeException("This customer has already been added. Thank you!");
 				}
 			}
@@ -372,7 +372,7 @@ public class MechanicShop{
 			if (esql.executeQueryAndPrintResult != 0) {
 				System.out.println("\nIs this the mechanic you wish to add (y/n) ");
 				string input = in.readLine();
-				if (input.equal("y") {
+				if (input.equal("y")) {
 					throw new runtimeException("This mechanic has already been added. Thank you!");
 				}
 			}
@@ -411,7 +411,7 @@ public class MechanicShop{
 			//Check if the Car's vin you enter is valid
 			query = String.format("SELECT o.* FROM Owns o WHERE o.car_vin = '%s'", vin);
 			if (esql.executeQueryAndPrintResult(query) != 0) {
-				throw new runtimeException("\nCar vin already exists);
+				throw new runtimeException("\nCar vin already exists");
 			}
 			
                         System.out.println("\nPlease enter Car's make: ");
