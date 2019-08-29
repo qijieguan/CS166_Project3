@@ -605,7 +605,12 @@ public class MechanicShop{
 	}
 	
 	public static void ListKCarsWithTheMostServices(MechanicShop esql){//9
-		
+		try {
+			String query = String.format("SELECT C.make, C.model, I.N AS SR_COUNT FROM (SELECT S.car_vin AS V, COUNT(S.car_vin) AS N FROM Service_Request S GROUP BY (S.car_vin)) I, Car C WHERE C.vin = I.V ORDER BY I.N DESC;");
+			esql.executeQueryAndPrintResult(query);
+		}catch(Exception e) {
+			System.err.println (e.getMessage ());
+		}
 	}
 	
 	public static void ListCustomersInDescendingOrderOfTheirTotalBill(MechanicShop esql){//9
