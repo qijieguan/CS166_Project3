@@ -597,7 +597,7 @@ public class MechanicShop{
 	
 	public static void ListCarsBefore1995With50000Milles(MechanicShop esql){//8
 		try {
-			String query = String.format("SELECT c.make, c.model, c.year FROM Car c, Service_Request s WHERE c.vin = s.car_vin AND c.year < 1995 AND s.odometer < 50000");
+			String query = String.format("SELECT c.make, c.model, c.year, s.odometer FROM Car c, Service_Request s WHERE c.vin = s.car_vin AND c.year < 1995 AND s.odometer < 50000");
 			esql.executeQueryAndPrintResult(query);
 		}catch(Exception e) {
 			System.err.println (e.getMessage ());
