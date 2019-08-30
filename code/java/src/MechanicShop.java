@@ -113,6 +113,35 @@ public class MechanicShop{
 		return rowCount;
 	}
 	
+	public int executeQueryAndPrintResult (String query, int k) throws SQLException {
+		Statement stmt = this._connection.createStatement ();
+		ResultSet rs = stmt.executeQuery (query);
+		ResultSetMetaData rsmd = rs.getMetaData ();
+		int numCol = rsmd.getColumnCount ();
+		int rowCount = 0;
+		boolean outputHeader = true;
+		while (rs.next()){
+			if(outputHeader){
+				for(int i = 1; i <= numCol; i++){
+					System.out.print(rsmd.getColumnName(i) + "\t");
+			    }
+			    System.out.println();
+			    outputHeader = false;
+			}
+			for (int i=1; i<=numCol; ++i)
+				System.out.print (rs.getString (i) + "\t");
+			System.out.println ();
+			++rowCount;
+			if (k > 0) {
+				if (rowCount == k) {
+					break;
+				}
+			}
+		}
+		stmt.close ();
+		return rowCount;
+	}
+	
 	/**
 	 * Method to execute an input query SQL instruction (i.e. SELECT).  This
 	 * method issues the query to the DBMS and returns the results as
@@ -606,48 +635,10 @@ public class MechanicShop{
 	
 	public static void ListKCarsWithTheMostServices(MechanicShop esql){//9
 		try {
-			System.out.println("\Please Enter the K value: ");
+			System.out.println("\nPlease Enter the K value: ");
 			int k = integer.parseInt(in.readLine());
 			String query = String.format("SELECT C.make, C.model, I.N AS SR_COUNT FROM (SELECT S.car_vin AS V, COUNT(S.car_vin) AS N FROM Service_Request S GROUP BY (S.car_vin)) I, Car C WHERE C.vin = I.V ORDER BY I.N DESC;");
-			
-			///////////////////////////////////////////////////////////////////////////////////////////////
-			//creates a statement object
-			Statement stmt = this._connection.createStatement ();
-
-			//issues the query instruction
-			ResultSet rs = stmt.executeQuery (query);
-
-			/*
-		 	*  obtains the metadata object for the returned result set.  The metadata
-		 	*  contains row and column info.
-		 	*/
-			ResultSetMetaData rsmd = rs.getMetaData ();
-			int numCol = rsmd.getColumnCount ();
-			int rowCount = 0;
-		
-			//iterates through the result set and output them to standard out.
-			boolean outputHeader = true;
-			while (rs.next()){
-				if(outputHeader){
-					for(int i = 1; i <= numCol; i++){
-						System.out.print(rsmd.getColumnName(i) + "\t");
-			    		}
-			    		System.out.println();
-			    		outputHeader = false;
-				}
-				for (int i=1; i<=numCol; ++i) 
-					System.out.print (rs.getString (i) + "\t");
-				System.out.println ();
-				++rowCount;
-				if (k > 0) {
-					if (rowCount == k) {
-						break;
-					}
-				}
-			}//end while
-			stmt.close ();
-			return rowCount;
-			///////////////////////////////////////////////////////////////////////////////////////////////////
+			esql.executeQueryAndPrintResult(query, k);
 		}catch(Exception e) {
 			System.err.println (e.getMessage ());
 		}
