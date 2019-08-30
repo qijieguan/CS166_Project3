@@ -636,8 +636,8 @@ public class MechanicShop{
 	public static void ListKCarsWithTheMostServices(MechanicShop esql){//9
 		try {
 			System.out.println("\nPlease Enter the K value: ");
-			int k = integer.parseInt(in.readLine());
-			String query = String.format("SELECT C.make, C.model, I.N AS SR_COUNT FROM (SELECT S.car_vin AS V, COUNT(S.car_vin) AS N FROM Service_Request S GROUP BY (S.car_vin)) I, Car C WHERE C.vin = I.V ORDER BY I.N DESC;");
+			int k = Integer.parseInt(in.readLine());
+			String query = String.format("SELECT c.make, c.model, A.c2 AS SR_COUNT FROM (SELECT s.car_vin AS c1, COUNT(s.car_vin) AS c2 FROM Service_Request s GROUP BY (s.car_vin)) A, Car c WHERE c.vin = A.c1 ORDER BY A.c2 DESC;");
 			esql.executeQueryAndPrintResult(query, k);
 		}catch(Exception e) {
 			System.err.println (e.getMessage ());
