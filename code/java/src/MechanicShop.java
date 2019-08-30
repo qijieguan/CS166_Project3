@@ -606,8 +606,48 @@ public class MechanicShop{
 	
 	public static void ListKCarsWithTheMostServices(MechanicShop esql){//9
 		try {
+			System.out.println("\Please Enter the K value: ");
+			int k = integer.parseInt(in.readLine());
 			String query = String.format("SELECT C.make, C.model, I.N AS SR_COUNT FROM (SELECT S.car_vin AS V, COUNT(S.car_vin) AS N FROM Service_Request S GROUP BY (S.car_vin)) I, Car C WHERE C.vin = I.V ORDER BY I.N DESC;");
-			esql.executeQueryAndPrintResult(query);
+			
+			///////////////////////////////////////////////////////////////////////////////////////////////
+			//creates a statement object
+			Statement stmt = this._connection.createStatement ();
+
+			//issues the query instruction
+			ResultSet rs = stmt.executeQuery (query);
+
+			/*
+		 	*  obtains the metadata object for the returned result set.  The metadata
+		 	*  contains row and column info.
+		 	*/
+			ResultSetMetaData rsmd = rs.getMetaData ();
+			int numCol = rsmd.getColumnCount ();
+			int rowCount = 0;
+		
+			//iterates through the result set and output them to standard out.
+			boolean outputHeader = true;
+			while (rs.next()){
+				if(outputHeader){
+					for(int i = 1; i <= numCol; i++){
+						System.out.print(rsmd.getColumnName(i) + "\t");
+			    		}
+			    		System.out.println();
+			    		outputHeader = false;
+				}
+				for (int i=1; i<=numCol; ++i) 
+					System.out.print (rs.getString (i) + "\t");
+				System.out.println ();
+				++rowCount;
+				if (k > 0) {
+					if (rowCount == k) {
+						break;
+					}
+				}
+			}//end while
+			stmt.close ();
+			return rowCount;
+			///////////////////////////////////////////////////////////////////////////////////////////////////
 		}catch(Exception e) {
 			System.err.println (e.getMessage ());
 		}
@@ -622,4 +662,5 @@ public class MechanicShop{
 		}
 	}
 	
-}
+	
+	
