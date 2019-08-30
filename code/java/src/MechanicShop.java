@@ -588,7 +588,7 @@ public class MechanicShop{
 	
 	public static void ListCustomersWithMoreThan20Cars(MechanicShop esql){//7
 		try {
-			String query = String.format("SELECT c.fname AS NAME, c.lname AS LASTNAME, S AS TotalCars FROM (SELECT Customer_id AS T, COUNT(customer_id) AS S FROM Owns GROUP BY (customer_id)) A, Customer C WHERE A.T = c.id AND A.S > 20;");
+			String query = String.format("SELECT c.fname AS FirstName, c.lname AS LastName, S AS TotalCars FROM (SELECT Customer_id AS T, COUNT(customer_id) AS S FROM Owns GROUP BY (customer_id)) A, Customer C WHERE A.T = c.id AND A.S > 20;");
 			esql.executeQueryAndPrintResult(query);
 		}catch(Exception e) {
 			System.err.println (e.getMessage ());
@@ -615,7 +615,7 @@ public class MechanicShop{
 	
 	public static void ListCustomersInDescendingOrderOfTheirTotalBill(MechanicShop esql){//9
 		try {
-			String query = String.format("SELECT D.fname, D.lname, B.TOTAL_BILL FROM (SELECT S.customer_id AS A, SUM(C.bill) AS TOTAL_BILL FROM Closed_Request C, Service_Request S, Customer C1 WHERE S.rid = C.rid AND S.customer_id = C1.id GROUP BY S.customer_id) B, Customer D WHERE D.id = B.A ORDER BY B.TOTAL_BILL DESC;");
+			String query = String.format("SELECT D.fname, D.lname, B.Total_Bill FROM (SELECT sr.customer_id AS A, SUM(cr.bill) AS Total_Bill FROM Closed_Request cr, Service_Request sr, Customer c WHERE sr.rid = cr.rid AND S.customer_id = c.id GROUP BY sr.customer_id) B, Customer D WHERE D.id = B.A ORDER BY B.Total_Bill DESC;");
 			esql.executeQueryAndPrintResult(query);
 		}catch(Exception e) {
 			System.err.println (e.getMessage ());
